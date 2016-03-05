@@ -11,6 +11,7 @@ Features to add for Alpha:
 Features for Beta: 
 * Editable Sites
 * Editable Columns
+* Clean up column generation stored procedures
 
 Phase 2:
 * Multiple dashboards per user (home, work etc)
