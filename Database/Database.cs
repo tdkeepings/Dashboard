@@ -194,5 +194,45 @@ namespace Data {
                 conn.Close();
             }
         }
+
+        public void DeleteSite(string siteName) {
+            SqlConnection conn = null;
+
+            try {
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["azureDB"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("up_DeleteSite", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                
+                cmd.Parameters.Add("@SiteName", SqlDbType.VarChar).Value = siteName;
+
+                cmd.ExecuteNonQuery();
+            } catch (Exception ex) {
+                conn.Close();
+                throw;
+            } finally {
+                conn.Close();
+            }
+        }
+
+        public void DeleteColumn(string columnName) {
+            SqlConnection conn = null;
+
+            try {
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["azureDB"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("up_DeleteColumn", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@ColumnName", SqlDbType.VarChar).Value = columnName;
+
+                cmd.ExecuteNonQuery();
+            } catch (Exception ex) {
+                conn.Close();
+                throw;
+            } finally {
+                conn.Close();
+            }
+        }
     }
 }

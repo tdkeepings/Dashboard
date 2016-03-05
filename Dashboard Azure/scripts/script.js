@@ -11,7 +11,22 @@
     $("a.close").each(function () {
         $(this).click(function () {
             overlay().close();
+            return false;
         });
+    });
+
+    // "X" visibility control
+    $(document).on("mouseenter", ".site", function () {
+        $(this).find("a.close").show();
+    });
+    $(document).on("mouseleave", ".site", function () {
+        $(this).find("a.close").hide();
+    });
+    $(document).on("mouseenter", ".column h3", function () {
+        $(this).find("a.close").show();
+    });
+    $(document).on("mouseleave", ".column h3", function () {
+        $(this).find("a.close").hide();
     });
 
     $("input.cancel").each(function () {
@@ -20,18 +35,28 @@
         });
     });
 
+    //Keyboard shortcut controller
     $(document).keyup(function (e) {
-        if (e.keyCode == 27) {
+        //Esc
+        if (e.keyCode === 27) {
             overlay().close();
         }
+
+        //Enter
+        if (e.keyCode === 13) {
+            if (overlay().isVisible()) {
+                overlay().accept();
+            }
+        }
     });
-
-
-    //Overlay class, properties (classes, names) mapped to what they are on frontend
-    
 });
 
+//Overlay class, properties (classes, names) mapped to what they are on frontend
 function overlay() {
+    this.isVisible = function () {
+        return $(".overlay").is(":visible");
+    };
+
     this.open = function (type) {
         var isSite = (type === "site") ? true : false;
         var isColumn = (type === "column") ? true : false;
@@ -55,6 +80,14 @@ function overlay() {
 
     this.close = function () {
         $(".overlay").fadeOut(300);
+    };
+
+    this.accept = function () {
+        $(".overlay").find(".accept").click();
+    };
+
+    this.cancel = function () {
+        $(".overlay").find(".accept").click();
     };
 
     return this;

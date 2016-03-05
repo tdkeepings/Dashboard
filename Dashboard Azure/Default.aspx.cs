@@ -23,5 +23,15 @@ namespace Dashboard_Azure {
         public static void InsertColumn(string columnName) {
             Database.Instance.InsertColumn(columnName);
         }
+
+        [WebMethod]
+        public static void DeleteSite(string siteName) {
+            Database.Instance.DeleteSite(siteName);
+        }
+
+        [WebMethod]
+        public static void DeleteColumn(string columnName) {
+            Database.Instance.DeleteColumn(columnName);
+        }
     }
 }

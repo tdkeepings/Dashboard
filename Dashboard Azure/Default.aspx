@@ -16,7 +16,7 @@
 		<div class="content">
             <div class="centered">
                 <h1>Dashboard</h1>
-                <p>Ripping off Googles new tab page since 2015</p>
+                <p>Sort of like Trello but not.</p>
                 <asp:Label runat="server" ID="Test"></asp:Label>
             </div>
 			
@@ -29,13 +29,15 @@
                 </div>
                 <div id="controller">
                     <div ng-repeat="column in page.columns">
+                        <div class="clearFloat" ng-if="$index % 6 == 0"></div>
                         <div class="column col-md-2" >
-                            <h3>{{ column.Name }}</h3>
+                            <h3>{{ column.Name }} <a ng-click='deleteColumn(column.Name)' class="close" href="#">&#10006;</a></h3>
                             <div ng-repeat="link in column.Sites[0]">
                                 <div class="site" style="background-color: {{link.BgColour}}; color: {{link.Colour}};">
                                     <a href="{{link.Url}}" target="_blank">
                                         {{link.Name}}
                                     </a>
+                                    <a ng-click='deleteSite(link.Name)' class="close" href="#">&#10006;</a>
                                 </div>
                             </div>
                         </div>

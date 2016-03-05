@@ -2,7 +2,7 @@
     var app = angular.module("LinkPage", []);
 
     app.controller("PageController", function ($scope, $http) {
-        var _this = this;
+        var _controller = this;
 
         $scope.load = function () {
             $scope.generateColumns(function () {
@@ -21,7 +21,7 @@
                 if (callback) {
                     callback();
                 }
-                _this.columns = ConstructColumns(eval(data.data.d));
+                _controller.columns = ConstructColumns(eval(data.data.d));
 
             }, function (err) {
                 console.log(err);
@@ -29,7 +29,6 @@
         };
 
         $scope.addSite = function () {
-            console.log("Add site...");
             var popup = $(".siteOverlay");
 
             var data = {
@@ -44,8 +43,6 @@
                     overlay().close();
                     overlay().clear();
                 });
-
-                
             });
         };
 
@@ -57,6 +54,18 @@
                     overlay().close();
                     overlay().clear();
                 });
+            });
+        };
+
+        $scope.deleteSite = function (name) {
+            $http.post("Default.aspx/DeleteSite", { siteName: name }).then(function (data) {
+                $scope.generateColumns();
+            });
+        };
+
+        $scope.deleteColumn = function (name) {
+            $http.post("Default.aspx/DeleteColumn", { columnName: name }).then(function (data) {
+                $scope.generateColumns();
             });
         };
 

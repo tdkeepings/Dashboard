@@ -6924,6 +6924,17 @@ a:hover {
   display: block;
   padding: 5% 10%;
 }
+.column h3 {
+  position: relative;
+}
+.column h3 a.close {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #cc181e;
+  opacity: 1;
+}
 .linkContainer {
   overflow: hidden;
   display: none;
@@ -6932,9 +6943,24 @@ a:hover {
   margin-bottom: 5px;
 }
 .site a {
-  padding: 10%;
-  display: block;
-  width: 100%;
+  display: inline-block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  width: 85%;
+}
+.site a.close {
+  font-size: 15px;
+  color: white;
+  padding-top: 12px;
+  padding-left: 0;
+  padding-right: 10px;
+  width: 15%;
+  opacity: 1;
+  display: none;
+}
+.clearFloat {
+  clear: both;
 }
 .site.new a {
   color: #bbb;
