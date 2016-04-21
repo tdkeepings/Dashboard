@@ -1,0 +1,29 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Master.master.cs" Inherits="Dashboard_Azure.Master" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Dashboard</title>
+	<link rel="icon" href="favicon.ico" type="image/x-icon" />
+	<script type="text/javascript" src="/scripts/jquery.js"></script>
+    <script type="text/javascript" src="/scripts/script.js"></script>
+	<script type="text/javascript" src="/scripts/angular.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+	<link rel="stylesheet" href="/css/style.min.css">
+
+    <asp:ContentPlaceHolder ID="Head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body ng-app="LinkPage">
+    <div class="constrain">
+        <div class="content">
+            <div class="centered">
+                <h1>Dashboard</h1>
+                <p>Sort of like Trello but not.</p>
+                <asp:Label runat="server" id="UserDetails"></asp:Label>
+            </div>
+
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </div>
+</body>
+</html>

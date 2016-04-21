@@ -1,12 +1,21 @@
-﻿using System;
-using System.Web.Script.Serialization;
-using System.Web.Services;
-using Data;
+﻿using Data;
 using Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace Dashboard_Azure {
-    public partial class Default : System.Web.UI.Page {
+    public partial class Home : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
+            if (!IsPostBack) {
+                if (Session["User"] == null) {
+                    Response.Redirect("Login.aspx");
+                }
+            }
         }
 
         [WebMethod]

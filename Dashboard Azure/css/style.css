@@ -7012,6 +7012,11 @@ a:hover {
 .buttons {
   margin: 0 auto;
 }
+.loginForm,
+.registerForm {
+  width: 50%;
+  margin: 0 auto;
+}
 input.button {
   padding: 10px 20px;
   border-radius: 5px;
