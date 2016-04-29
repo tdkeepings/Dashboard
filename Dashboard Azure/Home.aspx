@@ -6,6 +6,9 @@
             <div class="buttonContainer col-md-12">
                 <button type="button" class="btn btn-success addSite">+ Add Site</button>
                 <button type="button" class="btn btn-success addColumn">+ Add Column</button>
+                <form class="LogoutForm" runat="server">
+                    <asp:Button runat="server" CssClass="btn btn-danger" OnCommand="LogoutOnCommand" Text="Logout"></asp:Button>
+                </form>
             </div>
             <div id="controller">
                 <div ng-repeat="column in page.columns">

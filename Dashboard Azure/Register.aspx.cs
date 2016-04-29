@@ -2,6 +2,7 @@
 using Model;
 using System;
 using System.Collections.Specialized;
+using System.Web;
 
 namespace Dashboard_Azure {
     public partial class Register : System.Web.UI.Page {
@@ -16,6 +17,7 @@ namespace Dashboard_Azure {
             string password = PasswordTextBox.Text;
             string passwordConfirm = PasswordConfirmTextBox.Text;
             bool isValid = true;
+            ErrorLabel.Text = "";
 
             if (username.Equals("")) {
                 ErrorLabel.Text = "Username cannot be blank. ";
@@ -34,7 +36,14 @@ namespace Dashboard_Azure {
 
             if (password.Equals(passwordConfirm)) {
                 ErrorLabel.Text += "Passwords must match. ";
+                isValid = false;
             }
+
+            if (Database.Instance.DoesUsernameExist(username)) {
+                ErrorLabel.Text += "That username already exists. ";
+                isValid = false;
+            }
+
 
             if (isValid) {
                 Account newUser = new Account();
@@ -42,7 +51,10 @@ namespace Dashboard_Azure {
                 newUser.Password = newUser.EncryptPassword(password);
 
                 if (Database.Instance.CreateUser(newUser)) {
-                    Session["User"] = newUser;
+                    HttpCookie myCookie = new HttpCookie("User");
+                    myCookie["User"] = newUser.Name;
+                    myCookie.Expires = DateTime.Now.AddYears(1);
+                    Response.Cookies.Add(myCookie);
                     Response.Redirect("/Home.aspx");
                 } else {
                     ErrorLabel.Text += "Something bad happened. Don't worry, your data is safe :) ";

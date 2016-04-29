@@ -12,15 +12,27 @@ namespace Dashboard_Azure {
     public partial class Home : System.Web.UI.Page {
         protected void Page_Load(object sender, EventArgs e) {
             if (!IsPostBack) {
-                if (Session["User"] == null) {
+                HttpCookie myCookie = new HttpCookie("User");
+                myCookie = Request.Cookies["User"];
+
+                if (myCookie == null) {
                     Response.Redirect("Login.aspx");
                 }
             }
         }
 
+        protected void LogoutOnCommand(object sender, EventArgs e) {
+            HttpCookie myCookie = new HttpCookie("User");
+            myCookie.Expires = DateTime.Now.AddDays(-1d);
+            Response.Cookies.Add(myCookie);
+            Response.Redirect("Login.aspx");
+        }
+
         [WebMethod]
         public static string GetAllSites() {
-            return Database.Instance.GetAllData();
+            HttpCookie myCookie = new HttpCookie("User");
+            myCookie = HttpContext.Current.Request.Cookies["User"];
+            return Database.Instance.GetAllData(myCookie["User"]);
         }
 
         [WebMethod]
@@ -35,12 +47,16 @@ namespace Dashboard_Azure {
 
         [WebMethod]
         public static void DeleteSite(string siteName) {
-            Database.Instance.DeleteSite(siteName);
+            HttpCookie myCookie = new HttpCookie("User");
+            myCookie = HttpContext.Current.Request.Cookies["User"];
+            Database.Instance.DeleteSite(siteName, myCookie["User"]);
         }
 
         [WebMethod]
         public static void DeleteColumn(string columnName) {
-            Database.Instance.DeleteColumn(columnName);
+            HttpCookie myCookie = new HttpCookie("User");
+            myCookie = HttpContext.Current.Request.Cookies["User"];
+            Database.Instance.DeleteColumn(columnName, myCookie["User"]);
         }
     }
 }

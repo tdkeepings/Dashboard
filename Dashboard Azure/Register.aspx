@@ -6,7 +6,6 @@
                 <div class="formField">
                     <asp:Label runat="server" id="ErrorLabel" name="ErrorLabel" type="text"></asp:Label>
                 </div>
-
                 <div class="formField">
                     <asp:TextBox runat="server" id="UsernameTextBox" name="UsernameTextBox" type="text" placeholder="Username" ></asp:TextBox>
                 </div>
@@ -18,6 +17,9 @@
                 </div>
                 <div class="formField">
                     <asp:Button type="submit" Text="Register" class="button accept" runat="server" id="RegisterButton" OnClick="RegisterClicked"/>
+                </div>
+                <div class="formField">
+                    <a href="/Login.aspx">Login</a>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@
 using Data;
 using Model;
 using System.Collections.Specialized;
+using System.Web;
 
 namespace Dashboard_Azure {
     public partial class Login : System.Web.UI.Page {
@@ -16,7 +17,11 @@ namespace Dashboard_Azure {
             user.Password = user.EncryptPassword(PasswordTextBox.Text);
             
             if (Database.Instance.AuthenticateUser(user)) {
-                Session["User"] = user;
+                HttpCookie myCookie = new HttpCookie("User");
+                myCookie["User"] = user.Name;
+                myCookie.Expires = DateTime.Now.AddYears(1);
+                Response.Cookies.Add(myCookie);
+                
                 Response.Redirect("/Home.aspx");
             } else {
                 //Try again

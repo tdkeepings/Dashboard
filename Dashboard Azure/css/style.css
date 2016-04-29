@@ -6935,6 +6935,9 @@ a:hover {
   color: #cc181e;
   opacity: 1;
 }
+.LogoutForm {
+  float: right;
+}
 .linkContainer {
   overflow: hidden;
   display: none;

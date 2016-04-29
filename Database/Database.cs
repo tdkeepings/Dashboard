@@ -34,7 +34,7 @@ namespace Data {
             try {
                 conn = new SqlConnection(ConfigurationManager.ConnectionStrings["azureDB"].ConnectionString);
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("up_GetUserByUserDetails", conn);
+                SqlCommand cmd = new SqlCommand("up_GetCountUserByUserDetails", conn);
                 cmd.Parameters.Add(new SqlParameter("Username", user.Name));
                 cmd.Parameters.Add(new SqlParameter("Password", user.Password));
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -44,6 +44,8 @@ namespace Data {
                     int count = Convert.ToInt32(rdr["Count"].ToString());
                     if(count > 0) {
                         authenticated = true;
+                        user.PopulateUserDetails();
+                        UpdateLastLoggedIn(user);
                     }
                 }
             } catch (Exception ex) {
@@ -53,6 +55,33 @@ namespace Data {
             }
             
             return authenticated;
+        }
+
+        public bool DoesUsernameExist(string username) {
+            SqlConnection conn = null;
+            SqlDataReader reader = null;
+            bool exists = false;
+            try {
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["azureDB"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("up_GetUserByUsernameCount", conn);
+                cmd.Parameters.Add(new SqlParameter("Username", username));
+                cmd.CommandType = CommandType.StoredProcedure;
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read()) {
+                    if (Convert.ToInt32(reader["Count"].ToString()) > 0) {
+                        exists = true;
+                    }
+                }
+
+            } catch (Exception ex) {
+                conn.Close();
+            } finally {
+                conn.Close();
+            }
+
+            return exists;
         }
 
         /// <summary>
@@ -86,8 +115,8 @@ namespace Data {
         /// Get all of the column and site data
         /// </summary>
         /// <returns></returns>
-        public string GetAllData() {
-            List<int> ids = GetDistinctColumn();
+        public string GetAllData(string username) {
+            List<int> ids = GetDistinctColumn(username);
             List<Column> columns = new List<Column>();
             foreach(int i in ids) {
                 Column col = new Column();
@@ -109,7 +138,7 @@ namespace Data {
         /// Get unique columns
         /// </summary>
         /// <returns></returns>
-        public List<int> GetDistinctColumn() {
+        public List<int> GetDistinctColumn(string username) {
             SqlConnection conn = null;
             SqlDataReader rdr = null;
             List<int> ids = new List<int>();
@@ -117,7 +146,7 @@ namespace Data {
                 conn = new SqlConnection(ConfigurationManager.ConnectionStrings["azureDB"].ConnectionString);
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("up_SelectDistinctColumns", conn);
-                cmd.Parameters.Add(new SqlParameter("AccountId", 1));//TODO Change from 1! Need to suss out how to use Session instead
+                cmd.Parameters.Add(new SqlParameter("Username", username));
                 cmd.CommandType = CommandType.StoredProcedure;
                 rdr = cmd.ExecuteReader();
                 
@@ -162,8 +191,7 @@ namespace Data {
             } finally {
                 conn.Close();
             }
-
-
+            
             return col;
         }
 
@@ -288,9 +316,9 @@ namespace Data {
         /// Delete a site across all columns
         /// </summary>
         /// <param name="siteName"></param>
-        public void DeleteSite(string siteName) {
+        public void DeleteSite(string siteName, string username) {
             SqlConnection conn = null;
-
+            
             try {
                 conn = new SqlConnection(ConfigurationManager.ConnectionStrings["azureDB"].ConnectionString);
                 conn.Open();
@@ -298,7 +326,7 @@ namespace Data {
                 cmd.CommandType = CommandType.StoredProcedure;
                 
                 cmd.Parameters.Add("@SiteName", SqlDbType.VarChar).Value = siteName;
-
+                cmd.Parameters.Add(new SqlParameter("Username", username));
                 cmd.ExecuteNonQuery();
             } catch (Exception ex) {
                 conn.Close();
@@ -312,7 +340,7 @@ namespace Data {
         /// Delete a column and all associated sites
         /// </summary>
         /// <param name="columnName"></param>
-        public void DeleteColumn(string columnName) {
+        public void DeleteColumn(string columnName, string username) {
             SqlConnection conn = null;
 
             try {
@@ -322,7 +350,7 @@ namespace Data {
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add("@ColumnName", SqlDbType.VarChar).Value = columnName;
-
+                cmd.Parameters.Add(new SqlParameter("Username", username));
                 cmd.ExecuteNonQuery();
             } catch (Exception ex) {
                 conn.Close();
@@ -330,6 +358,24 @@ namespace Data {
             } finally {
                 conn.Close();
             }
+        }
+
+        private void UpdateLastLoggedIn(Account user) {
+            SqlConnection conn = null;
+            
+            try {
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["azureDB"].ConnectionString);
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("up_UpdateLastLoggedInForUser", conn);
+                cmd.Parameters.Add(new SqlParameter("UserId", user.ID));
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.BeginExecuteNonQuery();
+            } catch (Exception ex) {
+                conn.Close();
+            } finally {
+                conn.Close();
+            }
+
         }
     }
 }
