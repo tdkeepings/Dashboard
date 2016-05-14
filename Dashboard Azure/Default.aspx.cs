@@ -37,12 +37,16 @@ namespace Dashboard_Azure {
 
         [WebMethod]
         public static void InsertSite(Site data, string columnName) {
-            Database.Instance.InsertSiteToColumn(data, columnName);
+            HttpCookie myCookie = new HttpCookie("User");
+            myCookie = HttpContext.Current.Request.Cookies["User"];
+            Database.Instance.InsertSiteToColumn(data, columnName, myCookie["User"]);
         }
 
         [WebMethod]
         public static void InsertColumn(string columnName) {
-            Database.Instance.InsertColumn(columnName);
+            HttpCookie myCookie = new HttpCookie("User");
+            myCookie = HttpContext.Current.Request.Cookies["User"];
+            Database.Instance.InsertColumn(columnName, myCookie["User"]);
         }
 
         [WebMethod]

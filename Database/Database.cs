@@ -151,7 +151,7 @@ namespace Data {
                 rdr = cmd.ExecuteReader();
                 
                 while (rdr.Read()) {
-                    ids.Add(Convert.ToInt32(rdr["ColumnID"].ToString()));
+                    ids.Add(Convert.ToInt32(rdr["ID"].ToString()));
                 }
             } catch (Exception ex) {
                 conn.Close();
@@ -266,7 +266,7 @@ namespace Data {
         /// </summary>
         /// <param name="data"></param>
         /// <param name="columnName"></param>
-        public void InsertSiteToColumn(Site data, string columnName) {
+        public void InsertSiteToColumn(Site data, string columnName, string username) {
             SqlConnection conn = null;
             
             try {
@@ -274,6 +274,7 @@ namespace Data {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("up_InsertSite", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@Username", SqlDbType.VarChar).Value = username;
                 cmd.Parameters.Add("@ColumnName", SqlDbType.VarChar).Value = columnName;
                 cmd.Parameters.Add("@SiteName", SqlDbType.VarChar).Value = data.Name;
                 cmd.Parameters.Add("@SiteUrl", SqlDbType.VarChar).Value = data.Url;
@@ -293,7 +294,7 @@ namespace Data {
         /// Add a new column to the dashboard
         /// </summary>
         /// <param name="columnName"></param>
-        public void InsertColumn(string columnName) {
+        public void InsertColumn(string columnName, string username) {
             SqlConnection conn = null;
 
             try {
@@ -302,7 +303,7 @@ namespace Data {
                 SqlCommand cmd = new SqlCommand("up_InsertColumn", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@ColumnName", SqlDbType.VarChar).Value = columnName;
-                
+                cmd.Parameters.Add(new SqlParameter("Username", username));
                 cmd.ExecuteNonQuery();
             } catch (Exception ex) {
                 conn.Close();
