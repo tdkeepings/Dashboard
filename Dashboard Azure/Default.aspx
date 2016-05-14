@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="Dashboard_Azure.Home" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Dashboard_Azure.Home" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div ng-controller="PageController as page" ng-init="load()">
         <div class="loader">Loading...</div>

@@ -17,7 +17,7 @@
         };
 
         $scope.generateColumns = function (callback) {
-            $http.post('Home.aspx/GetAllSites', { data: {} }).then(function (data) {
+            $http.post('Default.aspx/GetAllSites', { data: {} }).then(function (data) {
                 if (callback) {
                     callback();
                 }
@@ -38,7 +38,7 @@
                 'Colour': $(popup).find("#SiteColour").val()
             }
 
-            $http.post("Home.aspx/InsertSite", { data: data, columnName: $(popup).find("#ColumnName").val() }).then(function (data) {
+            $http.post("Default.aspx/InsertSite", { data: data, columnName: $(popup).find("#ColumnName").val() }).then(function (data) {
                 $scope.generateColumns(function () {
                     overlay().close();
                     overlay().clear();
@@ -49,7 +49,7 @@
         $scope.addColumn = function () {
             var popup = $(".columnOverlay");
 
-            $http.post("Home.aspx/InsertColumn", { columnName: $(popup).find("#ColumnName").val() }).then(function (data) {
+            $http.post("Default.aspx/InsertColumn", { columnName: $(popup).find("#ColumnName").val() }).then(function (data) {
                 $scope.generateColumns(function () {
                     overlay().close();
                     overlay().clear();
@@ -58,13 +58,13 @@
         };
 
         $scope.deleteSite = function (name) {
-            $http.post("Home.aspx/DeleteSite", { siteName: name }).then(function (data) {
+            $http.post("Default.aspx/DeleteSite", { siteName: name }).then(function (data) {
                 $scope.generateColumns();
             });
         };
 
         $scope.deleteColumn = function (name) {
-            $http.post("Home.aspx/DeleteColumn", { columnName: name }).then(function (data) {
+            $http.post("Default.aspx/DeleteColumn", { columnName: name }).then(function (data) {
                 $scope.generateColumns();
             });
         };

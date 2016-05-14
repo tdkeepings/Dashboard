@@ -34,7 +34,7 @@ namespace Dashboard_Azure {
                 isValid = false;
             }
 
-            if (password.Equals(passwordConfirm)) {
+            if (!password.Equals(passwordConfirm)) {
                 ErrorLabel.Text += "Passwords must match. ";
                 isValid = false;
             }
@@ -55,7 +55,7 @@ namespace Dashboard_Azure {
                     myCookie["User"] = newUser.Name;
                     myCookie.Expires = DateTime.Now.AddYears(1);
                     Response.Cookies.Add(myCookie);
-                    Response.Redirect("/Home.aspx");
+                    Response.Redirect("/Default.aspx");
                 } else {
                     ErrorLabel.Text += "Something bad happened. Don't worry, your data is safe :) ";
                 }
