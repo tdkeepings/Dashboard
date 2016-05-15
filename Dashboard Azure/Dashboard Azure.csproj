@@ -95,6 +95,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\spectrum.css" />
     <Content Include="css\style.css">
       <DependentUpon>style.less</DependentUpon>
     </Content>
@@ -113,6 +114,7 @@
     <Content Include="scripts\app.js" />
     <Content Include="scripts\jquery.js" />
     <Content Include="scripts\script.js" />
+    <Content Include="scripts\spectrum.js" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="css\style.less" />
     <Content Include="css\_config.less" />
