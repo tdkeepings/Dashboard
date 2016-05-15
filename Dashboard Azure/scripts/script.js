@@ -35,6 +35,20 @@
         });
     });
 
+    $("#SiteBgColour").spectrum({
+        preferredFormat: 'rgb',
+        color: '#069',
+        allowEmpty: false,
+        clickoutFiresChange: true
+    });
+
+    $("#SiteColour").spectrum({
+        preferredFormat:'rgb',
+        color: '#fff',
+        allowEmpty: false,
+        clickoutFiresChange: true
+    });
+
     //Keyboard shortcut controller
     $(document).keyup(function (e) {
         //Esc

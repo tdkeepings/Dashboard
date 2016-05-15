@@ -9,7 +9,9 @@
     <script type="text/javascript" src="/scripts/script.js"></script>
 	<script type="text/javascript" src="/scripts/angular.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-	<link rel="stylesheet" href="/css/style.min.css">
+    <script type="text/javascript" src="/scripts/spectrum.js"></script>
+	<link rel="stylesheet" href="/css/style.min.css" />
+	<link rel="stylesheet" href="/css/spectrum.css" />
 
     <asp:ContentPlaceHolder ID="Head" runat="server"></asp:ContentPlaceHolder>
 </head>
