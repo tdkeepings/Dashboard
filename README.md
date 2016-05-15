@@ -7,6 +7,7 @@ Features to add for Alpha:
 * ~~Delete functionality for Columns~~
 * "Open all links in this column" when clicking Column title
 * ~~Accounts (dashboard on a per-user basis)~~
+* Add colours to background & font colour sections when creating a new site
 
 Features for Beta: 
 * Editable Sites
