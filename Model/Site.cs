@@ -28,10 +28,13 @@
 
         public string Url {
             get {
+                PrependHttpsToUrl(url);
                 return url;
             }
 
             set {
+                PrependHttpsToUrl(value);
+
                 url = value;
             }
         }
@@ -54,6 +57,17 @@
             set {
                 colour = value;
             }
+        }
+
+        ///<summary>
+        /// Checks the given url to see if it has http or https and adds it in if its missing
+        ///</summary>
+        private string PrependHttpsToUrl(string urlToCheck) {
+            if(!urlToCheck.StartsWith("http://") && !urlToCheck.StartsWith("https://")) {
+                urlToCheck = "https://" + urlToCheck;
+            }
+
+            return urlToCheck;
         }
     }
 }
