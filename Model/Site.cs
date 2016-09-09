@@ -28,12 +28,12 @@
 
         public string Url {
             get {
-                PrependHttpsToUrl(url);
+                PrependHttpToUrl(url);
                 return url;
             }
 
             set {
-                PrependHttpsToUrl(value);
+                PrependHttpToUrl(value);
 
                 url = value;
             }
@@ -62,9 +62,9 @@
         ///<summary>
         /// Checks the given url to see if it has http or https and adds it in if its missing
         ///</summary>
-        private string PrependHttpsToUrl(string urlToCheck) {
+        private string PrependHttpToUrl(string urlToCheck) {
             if(!urlToCheck.StartsWith("http://") && !urlToCheck.StartsWith("https://")) {
-                urlToCheck = "https://" + urlToCheck;
+                urlToCheck = "http://" + urlToCheck;
             }
 
             return urlToCheck;
