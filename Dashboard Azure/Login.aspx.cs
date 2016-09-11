@@ -22,7 +22,7 @@ namespace Dashboard_Azure {
                 myCookie.Expires = DateTime.Now.AddYears(1);
                 Response.Cookies.Add(myCookie);
                 
-                Response.Redirect("/Home.aspx");
+                Response.Redirect("/Default.aspx");
             } else {
                 //Try again
                 ErrorLabel.Text = "Incorrect details, please try again.";

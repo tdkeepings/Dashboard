@@ -277,7 +277,7 @@ namespace Data {
                 cmd.Parameters.Add("@Username", SqlDbType.VarChar).Value = username;
                 cmd.Parameters.Add("@ColumnName", SqlDbType.VarChar).Value = columnName;
                 cmd.Parameters.Add("@SiteName", SqlDbType.VarChar).Value = data.Name;
-                cmd.Parameters.Add("@SiteUrl", SqlDbType.VarChar).Value = data.Url;
+                cmd.Parameters.Add("@SiteUrl", SqlDbType.VarChar).Value = PrependHttpToUrl(data.Url);
                 cmd.Parameters.Add("@SiteBgColour", SqlDbType.VarChar).Value = data.BgColour;
                 cmd.Parameters.Add("@SiteColour", SqlDbType.VarChar).Value = data.Colour;
                 
@@ -288,6 +288,14 @@ namespace Data {
             } finally {
                 conn.Close();
             }
+        }
+
+        private string PrependHttpToUrl(string urlToCheck) {
+            if (!urlToCheck.StartsWith("http://") && !urlToCheck.StartsWith("https://")) {
+                urlToCheck = "http://" + urlToCheck;
+            }
+
+            return urlToCheck;
         }
 
         /// <summary>
